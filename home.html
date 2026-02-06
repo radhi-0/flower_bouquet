@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Rose Day ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(to top, #ff9a9e, #fad0c4);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+/* ===== FLOATING HEARTS ===== */
+.heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 18px;
+    opacity: 0.5;
+    animation: float 10s linear infinite;
+}
+@keyframes float {
+    to { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* ===== BOUQUET AREA ===== */
+#bouquet {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 75%;
+}
+
+/* ===== STEM ===== */
+.stem {
+    position: absolute;
+    bottom: 0;
+    width: 6px;
+    height: 120px;
+    background: linear-gradient(#2d6a4f, #1b4332);
+    border-radius: 5px;
+}
+
+/* ===== LEAVES ===== */
+.leaf {
+    position: absolute;
+    width: 22px;
+    height: 10px;
+    background: #52b788;
+    border-radius: 50%;
+    top: 45px;
+}
+.leaf.left { left: -20px; transform: rotate(-30deg); }
+.leaf.right { right: -20px; transform: rotate(30deg); }
+
+/* ===== FLOWER COMMON ===== */
+.flower {
+    position: absolute;
+    top: -45px;
+    left: -35px;
+    width: 80px;
+    height: 80px;
+    transform: scale(0.6);
+    opacity: 0;
+    transition: transform 2.5s ease, opacity 2.5s ease;
+}
+.flower.bloom {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* ===== ROSE ===== */
+.rose .petal {
+    position: absolute;
+    width: 42px;
+    height: 55px;
+    background: radial-gradient(circle at 30% 30%, #ff758f, #a4133c);
+    border-radius: 60% 60% 40% 40%;
+    transform-origin: bottom center;
+}
+.rose .petal:nth-child(1) { transform: rotate(0deg); }
+.rose .petal:nth-child(2) { transform: rotate(45deg); }
+.rose .petal:nth-child(3) { transform: rotate(90deg); }
+.rose .petal:nth-child(4) { transform: rotate(135deg); }
+.rose .petal:nth-child(5) { transform: rotate(180deg); }
+
+.rose .center {
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    width: 32px;
+    height: 32px;
+    background: radial-gradient(circle, #ffd6e0, #c9184a);
+    border-radius: 50%;
+}
+
+/* ===== TULIP ===== */
+.tulip .petal {
+    position: absolute;
+    width: 28px;
+    height: 55px;
+    background: linear-gradient(#ffffff, #dee2e6);
+    border-radius: 50% 50% 20% 20%;
+}
+.tulip .petal:nth-child(1) { left: 26px; }
+.tulip .petal:nth-child(2) { left: 16px; transform: rotate(-12deg); }
+.tulip .petal:nth-child(3) { left: 36px; transform: rotate(12deg); }
+
+/* ===== ENVELOPE ===== */
+.envelope {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    height: 140px;
+    background: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 5;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    transition: all 1.8s ease;
+}
+
+.envelope.open {
+    top: 50%;
+    width: 90vw;
+    height: 90vh;
+    transform: translate(-50%, -50%);
+    cursor: default;
+}
+
+.flap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #ffc2d1;
+    clip-path: polygon(0 0, 50% 50%, 100% 0);
+    transform-origin: top;
+    transition: 1.5s ease;
+}
+
+.envelope.open .flap {
+    transform: rotateX(180deg);
+}
+
+.letter {
+    position: absolute;
+    inset: 20px;
+    background: #fff0f3;
+    border-radius: 6px;
+    padding: 30px;
+    font-size: 22px;
+    line-height: 1.6;
+    opacity: 0;
+    transition: opacity 2s ease 0.8s;
+}
+
+.envelope.open .letter {
+    opacity: 1;
+}
+.front-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    font-weight: 500;
+    color: #6a040f;
+    text-align: center;
+    pointer-events: none; /* so clicking still opens envelope */
+    transition: opacity 1s ease;
+}
+
+/* Hide front-text when envelope opens */
+.envelope.open .front-text {
+    opacity: 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎶 MUSIC -->
+<audio id="music" preload="auto">
+    <source src="romantic.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 💖 HEARTS -->
+<script>
+for (let i = 0; i < 25; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = ["💖","💕","💗","❤️"][Math.floor(Math.random()*4)];
+    h.style.left = Math.random()*100 + "vw";
+    h.style.animationDuration = 8 + Math.random()*6 + "s";
+    document.body.appendChild(h);
+}
+</script>
+
+<!-- 🌹 BOUQUET -->
+<div id="bouquet"></div>
+
+<!-- 💌 LETTER -->
+
+</div>
+<div class="envelope" onclick="openLetter(this)">
+    <div class="flap"></div>
+    <div class="letter">
+        <strong>My Love ❤️</strong><br><br>
+        These roses bloom slowly,<br>
+        just like my you will too ...<br><br>
+        Happy Rose Day 🌹<br>
+        
+    </div>
+</div>
+<div class="envelope" onclick="openLetter(this)">
+    <div class="flap"></div>
+
+    <!-- Pre-opening text -->
+    <div class="front-text">you fhooll🌹</div>
+
+    <div class="letter">
+        <strong>My Love ❤️</strong><br><br>
+        These roses bloom slowly,<br>
+        maybe someday we will too??<br><br>
+        Happy Rose Day 🌹<br>
+        
+    </div>
+</div>
+
+<script>
+const bouquet = document.getElementById("bouquet");
+const music = document.getElementById("music");
+const FLOWERS = 100;
+
+for (let i = 0; i < FLOWERS; i++) {
+    const stem = document.createElement("div");
+    stem.className = "stem";
+    stem.style.left = Math.random()*100 + "%";
+
+    stem.appendChild(Object.assign(document.createElement("div"), {className:"leaf left"}));
+    stem.appendChild(Object.assign(document.createElement("div"), {className:"leaf right"}));
+
+    const flower = document.createElement("div");
+    const isRose = Math.random() > 0.35;
+    flower.className = "flower " + (isRose ? "rose" : "tulip");
+
+    if (isRose) {
+        for (let p=0;p<5;p++) flower.appendChild(document.createElement("div")).className="petal";
+        flower.appendChild(document.createElement("div")).className="center";
+    } else {
+        for (let p=0;p<3;p++) flower.appendChild(document.createElement("div")).className="petal";
+    }
+
+    stem.appendChild(flower);
+    bouquet.appendChild(stem);
+
+    setTimeout(()=>flower.classList.add("bloom"), i*80);
+}
+
+function openLetter(el) {
+    el.classList.add("open");
+    music.play();
+}
+</script>
+
+</body>
+</html>
